@@ -1,6 +1,6 @@
 signs:
-  Guardian: givePlayerGuardians,takePlayerMoney,playerisOp
-  GuardianXP: givePlayerGuardians,takePlayerXP,playerisOp
+  Guardian: givePlayerGuardians,takePlayerMoney,playerIsOp
+  GuardianXP: givePlayerGuardians,takePlayerXP,playerIsOp
 messages:
   setup:
     Guardian: You have created a Guardian sign that costs !price to buy !guardians Guardian(s)!
@@ -10,7 +10,7 @@ messages:
     GuardianXP: Pay !xp levels for !guardians Guardian(s)? You have !currentguardians Guardian(s).
   transaction:
     Guardian: You paid !price for !guardians additional Guardian(s)! You now have !currentguardians Guardian(s).
-    Guardian: You paid !xp levels for !guardians additional Guardian(s)! You now have !currentguardians Guardian(s).
+    GuardianXP: You paid !xp levels for !guardians additional Guardian(s)! You now have !currentguardians Guardian(s).
   transaction_owner:
     Guardian: ''
     GuardianXP: ''
