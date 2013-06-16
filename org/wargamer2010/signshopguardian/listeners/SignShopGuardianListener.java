@@ -30,7 +30,7 @@ public class SignShopGuardianListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerSpawn(PlayerRespawnEvent event) {
         SignShopPlayer player = new SignShopPlayer(event.getPlayer());
 

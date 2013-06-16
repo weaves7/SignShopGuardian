@@ -1,7 +1,9 @@
 
 package org.wargamer2010.signshopguardian.util;
 
+import org.wargamer2010.signshop.operations.SignShopArguments;
 import org.wargamer2010.signshop.player.SignShopPlayer;
+import org.wargamer2010.signshop.util.signshopUtil;
 import org.wargamer2010.signshopguardian.SignShopGuardian;
 
 public class GuardianUtil {
@@ -25,5 +27,12 @@ public class GuardianUtil {
         Integer newTotal = new Integer(getPlayerGuardianCount(player) + increment);
         player.setMeta(SignShopGuardian.getMetaName(), newTotal.toString());
         return newTotal;
+    }
+
+    public static Integer getAmountOfGuardians(SignShopArguments ssArgs) {
+        Integer numberOfGuardians = signshopUtil.getNumberFromLine(ssArgs.getSign().get(), 1).intValue();
+        if(numberOfGuardians == 0)
+            numberOfGuardians = 1;
+        return numberOfGuardians;
     }
 }
