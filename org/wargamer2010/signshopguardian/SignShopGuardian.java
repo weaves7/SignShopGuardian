@@ -19,7 +19,7 @@ public class SignShopGuardian extends JavaPlugin {
     private static final String metaName = "Guardians";
 
     /**
-     * Log given message at given level for SSHotel
+     * Log given message at given level for SignShopGuardian
      * @param message Message to log
      * @param level Level to log at
      */
@@ -68,6 +68,10 @@ public class SignShopGuardian extends JavaPlugin {
         log("Disabled", Level.INFO);
     }
 
+    /**
+     * Gets the key name used in Player Metadata
+     * @return key name for meta
+     */
     public static String getMetaName() {
         return metaName;
     }
@@ -85,7 +89,7 @@ public class SignShopGuardian extends JavaPlugin {
     }
 
     /**
-     * Gets the instance of SSHotel
+     * Gets the instance of SignShopGuardian
      * @return instance
      */
     public static SignShopGuardian getInstance() {
