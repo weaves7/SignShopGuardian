@@ -1,4 +1,4 @@
-SignShopHotel
+SignShopGuardian
 =============
 
-A SignShop extension plugin allowing users to create and rent Hotel rooms
+A SignShop extension plugin allowing users to buy Guardians to save their inventory when they die.
