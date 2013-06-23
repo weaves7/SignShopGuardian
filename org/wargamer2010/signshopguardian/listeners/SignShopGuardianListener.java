@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -16,41 +17,77 @@ import org.wargamer2010.signshop.player.SignShopPlayer;
 import org.wargamer2010.signshopguardian.util.GuardianUtil;
 
 public class SignShopGuardianListener implements Listener {
-    private static Map<String, List<ItemStack>> savedStacks = new LinkedHashMap<String, List<ItemStack>>();
+    private static Map<String, SavedInventory> savedStacks = new LinkedHashMap<String, SavedInventory>();
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerDeathEvent(PlayerDeathEvent event) {
         if(!event.getDrops().isEmpty()) {
-            SignShopPlayer player = new SignShopPlayer(event.getEntity());
-            List<ItemStack> storeStacks = new LinkedList<ItemStack>();
-            storeStacks.addAll(event.getDrops());
-            savedStacks.put(event.getEntity().getName(), storeStacks);
-            if(GuardianUtil.getPlayerGuardianCount(player) > 0)
+            Player player = event.getEntity();
+            SignShopPlayer ssPlayer = new SignShopPlayer(player);
+            savedStacks.put(event.getEntity().getName(), new SavedInventory(player.getInventory().getContents(), player.getInventory().getArmorContents()));
+            if(GuardianUtil.getPlayerGuardianCount(ssPlayer) > 0)
                 event.getDrops().clear(); // Clear the drops as we'll give it back to player on respawn
         }
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerSpawn(PlayerRespawnEvent event) {
-        SignShopPlayer player = new SignShopPlayer(event.getPlayer());
+        Player player = event.getPlayer();
+        SignShopPlayer ssPlayer = new SignShopPlayer(event.getPlayer());
 
-        if(savedStacks.containsKey(player.getName())) {
-            if(GuardianUtil.getPlayerGuardianCount(player) > 0) {
-                ItemStack[] stacks = new ItemStack[savedStacks.get(player.getName()).size()];
-                Integer guardiansLeft = GuardianUtil.incrementPlayerGuardianCounter(player, -1);
+        if(savedStacks.containsKey(ssPlayer.getName())) {
+            if(GuardianUtil.getPlayerGuardianCount(ssPlayer) > 0) {
+                Integer guardiansLeft = GuardianUtil.incrementPlayerGuardianCounter(ssPlayer, -1);
 
-                player.givePlayerItems(savedStacks.get(player.getName()).toArray(stacks));
+                // player.givePlayerItems(savedStacks.get(player.getName()).toArray(stacks));
+                SavedInventory saved = savedStacks.get(ssPlayer.getName());
+                if(saved.getInventory() != null)
+                    ssPlayer.givePlayerItems(saved.getInventory());
+                if(saved.getArmor() != null)
+                    player.getInventory().setArmorContents(saved.getArmor());
 
                 Map<String, String> messageParts = new LinkedHashMap<String, String>();
                 messageParts.put("!guardians", guardiansLeft.toString());
                 if(guardiansLeft == 0)
-                    player.sendMessage(SignShopConfig.getError("player_used_last_guardian", messageParts));
+                    ssPlayer.sendMessage(SignShopConfig.getError("player_used_last_guardian", messageParts));
                 else
-                    player.sendMessage(SignShopConfig.getError("player_has_guardians_left", messageParts));
+                    ssPlayer.sendMessage(SignShopConfig.getError("player_has_guardians_left", messageParts));
             } else {
-                player.sendMessage(SignShopConfig.getError("player_has_no_guardian", null));
+                ssPlayer.sendMessage(SignShopConfig.getError("player_has_no_guardian", null));
             }
             savedStacks.remove(event.getPlayer().getName());
+        }
+    }
+
+
+    private class SavedInventory {
+        private ItemStack[] Inventory = new ItemStack[0];
+        private ItemStack[] Armor = new ItemStack[0];
+
+        private SavedInventory(ItemStack[] inv, ItemStack[] armor) {
+            if(inv != null)
+                Inventory = getNotNullItems(inv);
+            if(armor != null)
+                Armor = getNotNullItems(armor);
+        }
+
+        private ItemStack[] getNotNullItems(ItemStack[] stacks) {
+            if(stacks == null)
+                return new ItemStack[0];
+            List<ItemStack> tempStacks = new LinkedList<ItemStack>();
+            for(ItemStack stack : stacks)
+                if(stack != null)
+                    tempStacks.add(stack);
+            ItemStack[] returnedStacks = new ItemStack[tempStacks.size()];
+            return tempStacks.toArray(returnedStacks);
+        }
+
+        public ItemStack[] getInventory() {
+            return Inventory;
+        }
+
+        public ItemStack[] getArmor() {
+            return Armor;
         }
     }
 }
