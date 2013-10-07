@@ -4,3 +4,16 @@ version: 0.1
 dev-url: http://dev.bukkit.org/server-mods/signshopguardian
 depend: [SignShop]
 author: Wargamer2010
+commands:
+  getguardians:
+    description: Queries the amount of guardians left
+    usage: /getguardians
+  countguards:
+    description: Queries the amount of guardians left
+    usage: /countguards
+  countguardians:
+    description: Queries the amount of guardians left
+    usage: /countguardians
+  guardiansleft:
+    description: Queries the amount of guardians left
+    usage: /guardiansleft

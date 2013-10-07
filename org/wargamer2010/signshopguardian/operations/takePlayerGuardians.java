@@ -6,17 +6,28 @@ import org.wargamer2010.signshop.operations.SignShopArguments;
 import org.wargamer2010.signshop.operations.SignShopOperation;
 import org.wargamer2010.signshop.player.SignShopPlayer;
 import org.wargamer2010.signshop.util.signshopUtil;
+import org.wargamer2010.signshopguardian.SignShopGuardian;
 import org.wargamer2010.signshopguardian.util.GuardianUtil;
 
 public class takePlayerGuardians implements SignShopOperation {
     @Override
     public Boolean setupOperation(SignShopArguments ssArgs) {
+        if(!SignShopGuardian.isEnabledForWorld(ssArgs.getPlayer().get().getWorld())) {
+            ssArgs.getPlayer().get().sendMessage(SignShopConfig.getError("guardian_not_allowed_in_world", ssArgs.getMessageParts()));
+            return false;
+        }
+
         ssArgs.setMessagePart("!guardians", GuardianUtil.getAmountOfGuardians(ssArgs).toString());
         return true;
     }
 
     @Override
     public Boolean checkRequirements(SignShopArguments ssArgs, Boolean activeCheck) {
+        if(!SignShopGuardian.isEnabledForWorld(ssArgs.getPlayer().get().getWorld())) {
+            ssArgs.getPlayer().get().sendMessage(SignShopConfig.getError("guardian_not_allowed_in_world", ssArgs.getMessageParts()));
+            return false;
+        }
+
         Integer guardianToTake = GuardianUtil.getAmountOfGuardians(ssArgs);
         ssArgs.setMessagePart("!guardians", guardianToTake.toString());
         ssArgs.setMessagePart("!currentguardians", GuardianUtil.getPlayerGuardianCount(ssArgs.getPlayer().get()).toString());

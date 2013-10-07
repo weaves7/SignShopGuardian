@@ -14,6 +14,7 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.wargamer2010.signshop.configuration.SignShopConfig;
 import org.wargamer2010.signshop.player.SignShopPlayer;
+import org.wargamer2010.signshopguardian.SignShopGuardian;
 import org.wargamer2010.signshopguardian.util.GuardianUtil;
 
 public class SignShopGuardianListener implements Listener {
@@ -21,6 +22,9 @@ public class SignShopGuardianListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerDeathEvent(PlayerDeathEvent event) {
+        if(!SignShopGuardian.isEnabledForWorld(event.getEntity().getWorld()))
+            return;
+
         if(!event.getDrops().isEmpty()) {
             Player player = event.getEntity();
             SignShopPlayer ssPlayer = new SignShopPlayer(player);
@@ -32,6 +36,9 @@ public class SignShopGuardianListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerSpawn(PlayerRespawnEvent event) {
+        if(!SignShopGuardian.isEnabledForWorld(event.getPlayer().getWorld()))
+            return;
+
         Player player = event.getPlayer();
         SignShopPlayer ssPlayer = new SignShopPlayer(event.getPlayer());
 
