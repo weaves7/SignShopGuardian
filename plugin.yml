@@ -1,6 +1,6 @@
 name: SignShopGuardian
 main: org.wargamer2010.signshopguardian.SignShopGuardian
-version: 0.1
+version: 1.1Dev
 dev-url: http://dev.bukkit.org/server-mods/signshopguardian
 depend: [SignShop]
 author: Wargamer2010
