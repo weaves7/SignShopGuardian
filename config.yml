@@ -19,6 +19,9 @@ messages:
   transaction_owner:
     Guardian: ''
     GuardianXP: ''
+  help:
+    Guardian: The Guardian sign exchanges the customer's money for Guardians.  The 2nd line of this sign is the number of Guardians to sell.  The 3rd line of this sign can say whatever you like, the price goes on the 4th.  Punch the sign with !linkmaterial to activate.
+    GuardianXP: The GuardianXP sign exchanges the customer's XP levels for Guardians.  The 2nd line of this sign is the number of Guardians to sell.  The 3rd line of this sign lists the amount of XP levels, the 4th line can say whatever you like.  Punch the sign with !linkmaterial to activate.
 errors:
   player_has_guardians_left: You have !guardians Guardian(s) left!
   player_used_last_guardian: You just used your last Guardian, make sure you stock up soon!
