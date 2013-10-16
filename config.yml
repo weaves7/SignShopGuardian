@@ -1,3 +1,8 @@
+# SignShopGuardian can be enabled per world, it is enabled in all worlds by default.
+# An example of how to only enable SignShopGuardian for the world LOL (and disable it for all other worlds):
+# EnabledWorlds:
+#   - LOL
+
 signs:
   Guardian: givePlayerGuardians,takePlayerMoney,playerIsOp
   GuardianXP: givePlayerGuardians,takePlayerXP,playerIsOp
@@ -20,8 +25,3 @@ errors:
   player_has_no_guardian: You don't have any more Guardians, your inventory was not saved!
   player_has_insufficient_guardians: You don't have any guardians left to sell! (You need at least !guardians)
   guardian_not_allowed_in_world: Guardians are not allowed in this world.
-
-# SignShopGuardian can be enabled per world, it is enabled in all worlds by default.
-# An example of how to only enable SignShopGuardian for the world LOL (and disable it for all other worlds):
-# EnabledWorlds:
-#   - LOL
