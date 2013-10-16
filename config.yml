@@ -1,7 +1,7 @@
 # SignShopGuardian can be enabled per world, it is enabled in all worlds by default.
 # An example of how to only enable SignShopGuardian for the world LOL (and disable it for all other worlds):
-# EnabledWorlds:
-#   - LOL
+#EnabledWorlds:
+#  - LOL
 
 signs:
   Guardian: givePlayerGuardians,takePlayerMoney,playerIsOp
