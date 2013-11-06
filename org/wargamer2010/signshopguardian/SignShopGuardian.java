@@ -84,39 +84,11 @@ public class SignShopGuardian extends JavaPlugin {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String args[]) {
         String commandName = cmd.getName().toLowerCase();
-        if(!commandName.equals("countguards") && !commandName.equals("countguardians")
-                && !commandName.equals("getguardians") && !commandName.equals("guardiansleft"))
-            return true;
-
-        SignShopPlayer player = new SignShopPlayer((Player) sender);
-        SignShopPlayer inspectPlayer = player;
-        if(!(sender instanceof Player))
-            return true;
-
-        if(args.length > 0) {
-            OfflinePlayer offline = Bukkit.getServer().getOfflinePlayer(args[0]);
-            Player online = Bukkit.getServer().getPlayer(args[0]);
-
-            if(online == null && (offline == null || !offline.hasPlayedBefore())) {
-                player.sendMessage("Player does not exist on this server");
-                return true;
-            }
-
-            String playername = Bukkit.getServer().getPlayer(args[0]) == null
-                    ? Bukkit.getServer().getOfflinePlayer(args[0]).getName()
-                    : Bukkit.getServer().getPlayer(args[0]).getName();
-
-            inspectPlayer = new SignShopPlayer(playername);
-        }
-
-        Map<String, String> parts = new HashMap<String, String>();
-        parts.put("!player", inspectPlayer.getName());
-        parts.put("!guardians", GuardianUtil.getPlayerGuardianCount(inspectPlayer).toString());
-
-        if(args.length > 0)
-            player.sendMessage(SignShopConfig.getError("other_player_has_guardians_left", parts));
-        else
-            player.sendMessage(SignShopConfig.getError("player_has_guardians_left", parts));
+        if(commandName.equalsIgnoreCase("countguards") || commandName.equalsIgnoreCase("countguardians")
+                || commandName.equalsIgnoreCase("getguardians") || commandName.equalsIgnoreCase("guardiansleft"))
+            CommandHandler.handleGuardianQuery(sender, args);
+        else if(commandName.equalsIgnoreCase("addguardians"))
+            return CommandHandler.handleAddGuardians(sender, args);
 
         return true;
     }
