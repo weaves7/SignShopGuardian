@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -88,12 +89,34 @@ public class SignShopGuardian extends JavaPlugin {
             return true;
 
         SignShopPlayer player = new SignShopPlayer((Player) sender);
+        SignShopPlayer inspectPlayer = player;
         if(!(sender instanceof Player))
             return true;
 
+        if(args.length > 0) {
+            OfflinePlayer offline = Bukkit.getServer().getOfflinePlayer(args[0]);
+            Player online = Bukkit.getServer().getPlayer(args[0]);
+
+            if(online == null && (offline == null || !offline.hasPlayedBefore())) {
+                player.sendMessage("Player does not exist on this server");
+                return true;
+            }
+
+            String playername = Bukkit.getServer().getPlayer(args[0]) == null
+                    ? Bukkit.getServer().getOfflinePlayer(args[0]).getName()
+                    : Bukkit.getServer().getPlayer(args[0]).getName();
+
+            inspectPlayer = new SignShopPlayer(playername);
+        }
+
         Map<String, String> parts = new HashMap<String, String>();
-        parts.put("!guardians", GuardianUtil.getPlayerGuardianCount(player).toString());
-        player.sendMessage(SignShopConfig.getError("player_has_guardians_left", parts));
+        parts.put("!player", inspectPlayer.getName());
+        parts.put("!guardians", GuardianUtil.getPlayerGuardianCount(inspectPlayer).toString());
+
+        if(args.length > 0)
+            player.sendMessage(SignShopConfig.getError("other_player_has_guardians_left", parts));
+        else
+            player.sendMessage(SignShopConfig.getError("player_has_guardians_left", parts));
 
         return true;
     }
