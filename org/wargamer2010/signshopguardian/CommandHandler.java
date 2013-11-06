@@ -79,18 +79,29 @@ public class CommandHandler {
                 return true;
         }
 
-        if(args.length < 2)
+        if(args.length < 1)
             return false;
 
-        String playername = checkPlayer(args[0]);
-        if(playername == null) {
-            sendMessage(sender, "Player does not exist on this server");
-            return true;
+        String playername;
+        if(args.length > 1) {
+            playername = checkPlayer(args[0]);
+
+            if(playername == null) {
+                sendMessage(sender, "Player does not exist on this server");
+                return true;
+            }
+        } else {
+            if(!(sender instanceof Player)) {
+                sendMessage(sender, "Specify a player to use this command on the console");
+                return true;
+            }
+            playername = ((Player)sender).getName();
         }
 
         try {
             SignShopPlayer dude = new SignShopPlayer(playername);
-            int count = Integer.parseInt(args[1]);
+            int index = (args.length == 1 ? 0 : 1);
+            int count = Integer.parseInt(args[index]);
             // Taking away guardians should be possible by passing negatives
             if(count < 0 && GuardianUtil.getPlayerGuardianCount(dude) < Math.abs(count)) {
                 Map<String, String> temp = new LinkedHashMap<String, String>();
@@ -103,7 +114,11 @@ public class CommandHandler {
 
             Map<String, String> temp = new LinkedHashMap<String, String>();
             temp.put("!guardians", Integer.toString(count));
-            sendMessage(sender, SignShopConfig.getError("added_guardians_for_player", temp));
+
+            if(args.length == 1)
+                sendMessage(sender, SignShopConfig.getError("added_guardians_for_self", temp));
+            else
+                sendMessage(sender, SignShopConfig.getError("added_guardians_for_player", temp));
         } catch(NumberFormatException ex) {
             return false;
         }

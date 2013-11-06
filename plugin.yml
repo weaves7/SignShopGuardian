@@ -19,4 +19,4 @@ commands:
     usage: /guardiansleft
   addguardians:
     description: Gifts or removes the given amount of guardians
-    usage: /addguardians [player] [amount]
+    usage: /addguardians [player] <amount>

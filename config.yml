@@ -27,4 +27,5 @@ errors:
   player_has_insufficient_guardians: You don't have any guardians left to sell! (You need at least !guardians)
   other_player_has_insufficient_guardians: Player only has !guardians guardians, not enough to complete this command
   added_guardians_for_player: Succesfully added !guardians guardians to the players account
+  added_guardians_for_self: Succesfully added !guardians guardians to your account
   guardian_not_allowed_in_world: Guardians are not allowed in this world.
