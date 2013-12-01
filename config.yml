@@ -1,7 +1,8 @@
+
 # SignShopGuardian can be enabled per world, it is enabled in all worlds by default.
 # An example of how to only enable SignShopGuardian for the world LOL (and disable it for all other worlds):
-#EnabledWorlds:
-#  - LOL
+# EnabledWorlds:
+#   - LOL
 
 signs:
   Guardian: givePlayerGuardians,takePlayerMoney,playerIsOp
@@ -19,9 +20,6 @@ messages:
   transaction_owner:
     Guardian: ''
     GuardianXP: ''
-  help:
-    Guardian: The Guardian sign exchanges the customer's money for Guardians.  The 2nd line of this sign is the number of Guardians to sell.  The 3rd line of this sign can say whatever you like, the price goes on the 4th.  Punch the sign with !linkmaterial to activate.
-    GuardianXP: The GuardianXP sign exchanges the customer's XP levels for Guardians.  The 2nd line of this sign is the number of Guardians to sell.  The 3rd line of this sign lists the amount of XP levels, the 4th line can say whatever you like.  Punch the sign with !linkmaterial to activate.
 errors:
   player_has_guardians_left: You have !guardians Guardian(s) left!
   other_player_has_guardians_left: \!player has !guardians Guardian(s) left!
@@ -29,6 +27,6 @@ errors:
   player_has_no_guardian: You don't have any more Guardians, your inventory was not saved!
   player_has_insufficient_guardians: You don't have any guardians left to sell! (You need at least !guardians)
   other_player_has_insufficient_guardians: Player only has !guardians guardians, not enough to complete this command
-  added_guardians_for_player: Succesfully added !guardians guardians to the players account
-  added_guardians_for_self: Succesfully added !guardians guardians to your account
+  added_guardians_for_player: Succesfully added !guardians guardians to the player's account.
+  added_guardians_for_self: Succesfully added !guardians guardians to your account.
   guardian_not_allowed_in_world: Guardians are not allowed in this world.
