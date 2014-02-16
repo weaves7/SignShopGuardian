@@ -30,13 +30,14 @@ public class SignShopGuardianListener implements Listener {
             Player player = event.getEntity();
             SignShopPlayer ssPlayer = new SignShopPlayer(player);
 
-            int xp = event.getKeepLevel() ? 0 : (SetExpFix.getTotalExperience(player) - event.getNewTotalExp());
-            SavedInventory inv = new SavedInventory(player.getInventory().getContents(), player.getInventory().getArmorContents(), xp);
+            SavedInventory inv = new SavedInventory(player.getInventory().getContents(), player.getInventory().getArmorContents());
             savedStacks.put(event.getEntity().getName(), inv);
             if(GuardianUtil.getPlayerGuardianCount(ssPlayer) > 0) {
                 event.getDrops().clear(); // Clear the drops as we'll give it back to player on respawn
-                if(SignShopGuardian.isEnableSaveXP())
-                    event.setDroppedExp(0); // We'll give the XP back on spawn
+                if(SignShopGuardian.isEnableSaveXP()) {
+                    event.setKeepLevel(true);
+                    event.setDroppedExp(0);
+                }
             }
         }
     }
@@ -58,8 +59,6 @@ public class SignShopGuardianListener implements Listener {
                     ssPlayer.givePlayerItems(saved.getInventory());
                 if(saved.getArmor() != null)
                     player.getInventory().setArmorContents(saved.getArmor());
-                if(saved.getXP() > 0 && SignShopGuardian.isEnableSaveXP())
-                    player.giveExp(saved.getXP());
 
                 Map<String, String> messageParts = new LinkedHashMap<String, String>();
                 messageParts.put("!guardians", guardiansLeft.toString());
@@ -78,14 +77,12 @@ public class SignShopGuardianListener implements Listener {
     private class SavedInventory {
         private ItemStack[] Inventory = new ItemStack[0];
         private ItemStack[] Armor = new ItemStack[0];
-        private int XP = 0;
 
-        private SavedInventory(ItemStack[] inv, ItemStack[] armor, int xp) {
+        private SavedInventory(ItemStack[] inv, ItemStack[] armor) {
             if(inv != null)
                 Inventory = getNotNullItems(inv);
             if(armor != null)
                 Armor = getNotNullItems(armor);
-            XP = xp;
         }
 
         private ItemStack[] getNotNullItems(ItemStack[] stacks) {
@@ -105,10 +102,6 @@ public class SignShopGuardianListener implements Listener {
 
         public ItemStack[] getArmor() {
             return Armor;
-        }
-
-        public int getXP() {
-            return XP;
         }
     }
 }
