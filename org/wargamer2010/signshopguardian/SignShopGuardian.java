@@ -6,20 +6,16 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.wargamer2010.signshop.configuration.SignShopConfig;
 import org.wargamer2010.signshop.configuration.configUtil;
 import org.wargamer2010.signshop.metrics.setupMetrics;
-import org.wargamer2010.signshop.player.SignShopPlayer;
 import org.wargamer2010.signshopguardian.listeners.SignShopGuardianListener;
-import org.wargamer2010.signshopguardian.util.GuardianUtil;
 
 public class SignShopGuardian extends JavaPlugin {
     private static final Logger logger = Logger.getLogger("Minecraft");
@@ -28,6 +24,7 @@ public class SignShopGuardian extends JavaPlugin {
 
     // Settings
     private static List<String> EnabledWorlds;
+    private static boolean EnableSaveXP = false;
 
     /**
      * Log given message at given level for SignShopGuardian
@@ -108,6 +105,7 @@ public class SignShopGuardian extends JavaPlugin {
      */
     private void getSettings(FileConfiguration ymlThing) {
         EnabledWorlds = ymlThing.getStringList("EnabledWorlds"); // Empty list if not found
+        EnableSaveXP = ymlThing.getBoolean("EnableSaveXP", EnableSaveXP);
     }
 
     private void createDir() {
@@ -130,6 +128,12 @@ public class SignShopGuardian extends JavaPlugin {
         return instance;
     }
 
+    /**
+     * Returns True if SignshopGuardian is enabled for the given World
+     *
+     * @param world
+     * @return
+     */
     public static boolean isEnabledForWorld(World world) {
         if(EnabledWorlds.isEmpty())
             return true;
@@ -137,5 +141,14 @@ public class SignShopGuardian extends JavaPlugin {
             if(sWorld.equalsIgnoreCase(world.getName()))
                 return true;
         return false;
+    }
+
+    /**
+     * Returns True if XP levels should be saved on player death
+     *
+     * @return EnableSaveXP setting from config
+     */
+    public static boolean isEnableSaveXP() {
+        return EnableSaveXP;
     }
 }

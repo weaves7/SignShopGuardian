@@ -5,7 +5,6 @@ import org.wargamer2010.signshop.configuration.SignShopConfig;
 import org.wargamer2010.signshop.operations.SignShopArguments;
 import org.wargamer2010.signshop.operations.SignShopOperation;
 import org.wargamer2010.signshop.player.SignShopPlayer;
-import org.wargamer2010.signshop.util.signshopUtil;
 import org.wargamer2010.signshopguardian.SignShopGuardian;
 import org.wargamer2010.signshopguardian.util.GuardianUtil;
 

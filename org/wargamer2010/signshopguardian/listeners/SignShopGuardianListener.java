@@ -12,6 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
+import org.wargamer2010.essentials.SetExpFix;
 import org.wargamer2010.signshop.configuration.SignShopConfig;
 import org.wargamer2010.signshop.player.SignShopPlayer;
 import org.wargamer2010.signshopguardian.SignShopGuardian;
@@ -28,9 +29,15 @@ public class SignShopGuardianListener implements Listener {
         if(!event.getDrops().isEmpty()) {
             Player player = event.getEntity();
             SignShopPlayer ssPlayer = new SignShopPlayer(player);
-            savedStacks.put(event.getEntity().getName(), new SavedInventory(player.getInventory().getContents(), player.getInventory().getArmorContents()));
-            if(GuardianUtil.getPlayerGuardianCount(ssPlayer) > 0)
+
+            int xp = event.getKeepLevel() ? 0 : (SetExpFix.getTotalExperience(player) - event.getNewTotalExp());
+            SavedInventory inv = new SavedInventory(player.getInventory().getContents(), player.getInventory().getArmorContents(), xp);
+            savedStacks.put(event.getEntity().getName(), inv);
+            if(GuardianUtil.getPlayerGuardianCount(ssPlayer) > 0) {
                 event.getDrops().clear(); // Clear the drops as we'll give it back to player on respawn
+                if(SignShopGuardian.isEnableSaveXP())
+                    event.setDroppedExp(0); // We'll give the XP back on spawn
+            }
         }
     }
 
@@ -46,12 +53,13 @@ public class SignShopGuardianListener implements Listener {
             if(GuardianUtil.getPlayerGuardianCount(ssPlayer) > 0) {
                 Integer guardiansLeft = GuardianUtil.incrementPlayerGuardianCounter(ssPlayer, -1);
 
-                // player.givePlayerItems(savedStacks.get(player.getName()).toArray(stacks));
                 SavedInventory saved = savedStacks.get(ssPlayer.getName());
                 if(saved.getInventory() != null)
                     ssPlayer.givePlayerItems(saved.getInventory());
                 if(saved.getArmor() != null)
                     player.getInventory().setArmorContents(saved.getArmor());
+                if(saved.getXP() > 0 && SignShopGuardian.isEnableSaveXP())
+                    player.giveExp(saved.getXP());
 
                 Map<String, String> messageParts = new LinkedHashMap<String, String>();
                 messageParts.put("!guardians", guardiansLeft.toString());
@@ -70,12 +78,14 @@ public class SignShopGuardianListener implements Listener {
     private class SavedInventory {
         private ItemStack[] Inventory = new ItemStack[0];
         private ItemStack[] Armor = new ItemStack[0];
+        private int XP = 0;
 
-        private SavedInventory(ItemStack[] inv, ItemStack[] armor) {
+        private SavedInventory(ItemStack[] inv, ItemStack[] armor, int xp) {
             if(inv != null)
                 Inventory = getNotNullItems(inv);
             if(armor != null)
                 Armor = getNotNullItems(armor);
+            XP = xp;
         }
 
         private ItemStack[] getNotNullItems(ItemStack[] stacks) {
@@ -95,6 +105,10 @@ public class SignShopGuardianListener implements Listener {
 
         public ItemStack[] getArmor() {
             return Armor;
+        }
+
+        public int getXP() {
+            return XP;
         }
     }
 }

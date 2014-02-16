@@ -4,6 +4,10 @@
 # EnabledWorlds:
 #   - LOL
 
+# If set to true, XP levels will be saved on player death and restored when the player respawns with
+# enough guardians (default: false)
+EnableSaveXP: false
+
 signs:
   Guardian: givePlayerGuardians,takePlayerMoney,playerIsOp
   GuardianXP: givePlayerGuardians,takePlayerXP,playerIsOp
