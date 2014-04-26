@@ -10,6 +10,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.wargamer2010.signshop.configuration.SignShopConfig;
+import org.wargamer2010.signshop.player.PlayerIdentifier;
 import org.wargamer2010.signshop.player.SignShopPlayer;
 import org.wargamer2010.signshop.util.signshopUtil;
 import org.wargamer2010.signshopguardian.util.GuardianUtil;
@@ -52,7 +53,7 @@ public class CommandHandler {
                 return;
             }
 
-            inspectPlayer = new SignShopPlayer(playername);
+            inspectPlayer = PlayerIdentifier.getByName(playername);
         } else {
             if(!(sender instanceof Player)) {
                 sendMessage(sender, "Specify a player to use this command on the console");
@@ -99,7 +100,7 @@ public class CommandHandler {
         }
 
         try {
-            SignShopPlayer dude = new SignShopPlayer(playername);
+            SignShopPlayer dude = PlayerIdentifier.getByName(playername);
             int index = (args.length == 1 ? 0 : 1);
             int count = Integer.parseInt(args[index]);
             // Taking away guardians should be possible by passing negatives
