@@ -45,12 +45,12 @@ public class SignShopGuardianListener implements Listener {
                 } else {
                     // Clear the drops as we'll give it back to player on respawn
                     event.getDrops().clear();
-                    if(SignShopGuardian.isEnableSaveXP()) {
-                        event.setKeepLevel(true);
-                        event.setDroppedExp(0);
-                    }
                 }
-
+                
+                if(SignShopGuardian.isEnableSaveXP()) {
+                    event.setKeepLevel(true);
+                    event.setDroppedExp(0);
+                }
             }
         }
     }
