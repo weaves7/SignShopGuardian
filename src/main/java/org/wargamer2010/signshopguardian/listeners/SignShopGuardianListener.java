@@ -1,10 +1,6 @@
 
 package org.wargamer2010.signshopguardian.listeners;
 
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,14 +9,20 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
+import org.wargamer2010.SignShopGuardian;
 import org.wargamer2010.signshop.SignShop;
 import org.wargamer2010.signshop.configuration.SignShopConfig;
 import org.wargamer2010.signshop.player.SignShopPlayer;
-import org.wargamer2010.signshopguardian.SignShopGuardian;
 import org.wargamer2010.signshopguardian.util.GuardianUtil;
 
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+
 public class SignShopGuardianListener implements Listener {
-    private static Map<String, SavedInventory> savedStacks = new LinkedHashMap<String, SavedInventory>();
+    private static Map<String, SavedInventory> savedStacks = new LinkedHashMap<>();
     private boolean hasKeepInventory;
 
     public SignShopGuardianListener() {
@@ -29,7 +31,7 @@ public class SignShopGuardianListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerDeathEvent(PlayerDeathEvent event) {
-        if(!SignShopGuardian.isEnabledForWorld(event.getEntity().getWorld()))
+        if (SignShopGuardian.isNotEnabledForWorld(event.getEntity().getWorld()))
             return;
 
         if(!event.getDrops().isEmpty()) {
@@ -57,7 +59,7 @@ public class SignShopGuardianListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerSpawn(PlayerRespawnEvent event) {
-        if(!SignShopGuardian.isEnabledForWorld(event.getPlayer().getWorld()))
+        if (SignShopGuardian.isNotEnabledForWorld(event.getPlayer().getWorld()))
             return;
 
         Player player = event.getPlayer();
@@ -67,7 +69,7 @@ public class SignShopGuardianListener implements Listener {
             if(GuardianUtil.getPlayerGuardianCount(ssPlayer) > 0) {
                 Integer guardiansLeft = GuardianUtil.incrementPlayerGuardianCounter(ssPlayer, -1);
                 String message;
-                Map<String, String> messageParts = new LinkedHashMap<String, String>();
+                Map<String, String> messageParts = new LinkedHashMap<>();
                 messageParts.put("!guardians", guardiansLeft.toString());
                 if(guardiansLeft == 0)
                     message = SignShopConfig.getError("player_used_last_guardian", messageParts);
@@ -100,7 +102,7 @@ public class SignShopGuardianListener implements Listener {
         }
     }
 
-    private class DelayedGiver implements Runnable {
+    private static class DelayedGiver implements Runnable {
         private SignShopPlayer player;
         private SavedInventory saved;
         private String message;
@@ -120,21 +122,21 @@ public class SignShopGuardianListener implements Listener {
         }
     }
 
-    private class SavedInventory {
+    private static class SavedInventory {
         private ItemStack[] Inventory = new ItemStack[0];
         private ItemStack[] Armor = new ItemStack[0];
 
         private SavedInventory(ItemStack[] inv, ItemStack[] armor) {
-            if(inv != null)
+            if (inv != null)
                 Inventory = getNotNullItems(inv);
-            if(armor != null)
+            if (armor != null)
                 Armor = getNotNullItems(armor);
         }
 
         private ItemStack[] getNotNullItems(ItemStack[] stacks) {
             if(stacks == null)
                 return new ItemStack[0];
-            List<ItemStack> tempStacks = new LinkedList<ItemStack>();
+            List<ItemStack> tempStacks = new LinkedList<>();
             for(ItemStack stack : stacks)
                 if(stack != null)
                     tempStacks.add(stack);

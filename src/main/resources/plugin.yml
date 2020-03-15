@@ -1,0 +1,23 @@
+name: SignShopGuardian
+main: org.wargamer2010.signshopguardian.SignShopGuardian
+api-version: "1.13"
+version: "${project.version}"
+dev-url: http://dev.bukkit.org/server-mods/org.wargamer2010.signshopguardian
+depend: [SignShop]
+authors: [Wargamer2010, Weaves]
+commands:
+  getguardians:
+    description: Queries the amount of guardians left
+    usage: /getguardians
+  countguards:
+    description: Queries the amount of guardians left
+    usage: /countguards
+  countguardians:
+    description: Queries the amount of guardians left
+    usage: /countguardians
+  guardiansleft:
+    description: Queries the amount of guardians left
+    usage: /guardiansleft
+  addguardians:
+    description: Gifts or removes the given amount of guardians
+    usage: /addguardians [player] <amount>
