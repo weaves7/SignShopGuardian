@@ -6,8 +6,6 @@ import org.wargamer2010.signshop.player.SignShopPlayer;
 import org.wargamer2010.signshop.util.signshopUtil;
 import org.wargamer2010.signshopguardian.SignShopGuardian;
 
-import java.lang.reflect.Method;
-
 public class GuardianUtil {
     private GuardianUtil() {
 
@@ -36,22 +34,5 @@ public class GuardianUtil {
         if(numberOfGuardians == 0)
             numberOfGuardians = 1;
         return numberOfGuardians;
-    }
-
-    /**
-     * Returns true if the given class has a method by the name specified.
-     * Name compare is case insensitive.
-     *
-     * @param aClass Class to check for the method
-     * @param methodName Name of the method to find
-     * @return True if the method was found by the given name
-     */
-    public static boolean hasMethod(Class<?> aClass, String methodName) {
-        for(Method method : aClass.getMethods()) {
-            if(method.getName().equalsIgnoreCase(methodName))
-                return true;
-        }
-
-        return false;
     }
 }
