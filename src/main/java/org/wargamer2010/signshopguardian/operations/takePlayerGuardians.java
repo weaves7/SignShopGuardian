@@ -1,11 +1,11 @@
 
 package org.wargamer2010.signshopguardian.operations;
 
-import org.wargamer2010.SignShopGuardian;
 import org.wargamer2010.signshop.configuration.SignShopConfig;
 import org.wargamer2010.signshop.operations.SignShopArguments;
 import org.wargamer2010.signshop.operations.SignShopOperation;
 import org.wargamer2010.signshop.player.SignShopPlayer;
+import org.wargamer2010.signshopguardian.SignShopGuardian;
 import org.wargamer2010.signshopguardian.util.GuardianUtil;
 
 public class takePlayerGuardians implements SignShopOperation {

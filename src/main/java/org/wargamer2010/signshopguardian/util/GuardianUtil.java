@@ -1,10 +1,10 @@
 
 package org.wargamer2010.signshopguardian.util;
 
-import org.wargamer2010.SignShopGuardian;
 import org.wargamer2010.signshop.operations.SignShopArguments;
 import org.wargamer2010.signshop.player.SignShopPlayer;
 import org.wargamer2010.signshop.util.signshopUtil;
+import org.wargamer2010.signshopguardian.SignShopGuardian;
 
 import java.lang.reflect.Method;
 

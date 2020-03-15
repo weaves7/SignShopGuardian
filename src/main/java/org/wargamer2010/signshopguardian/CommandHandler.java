@@ -1,5 +1,5 @@
 
-package org.wargamer2010;
+package org.wargamer2010.signshopguardian;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;

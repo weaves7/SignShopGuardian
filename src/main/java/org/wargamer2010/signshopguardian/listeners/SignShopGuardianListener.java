@@ -9,10 +9,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
-import org.wargamer2010.SignShopGuardian;
 import org.wargamer2010.signshop.SignShop;
 import org.wargamer2010.signshop.configuration.SignShopConfig;
 import org.wargamer2010.signshop.player.SignShopPlayer;
+import org.wargamer2010.signshopguardian.SignShopGuardian;
 import org.wargamer2010.signshopguardian.util.GuardianUtil;
 
 import java.util.LinkedHashMap;

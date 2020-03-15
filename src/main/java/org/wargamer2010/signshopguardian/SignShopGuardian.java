@@ -1,4 +1,4 @@
-package org.wargamer2010;
+package org.wargamer2010.signshopguardian;
 
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -91,7 +91,7 @@ public class SignShopGuardian extends JavaPlugin {
         pm.registerEvents(new SignShopGuardianListener(), this);
         createDir();
 
-        String filename = "src/main/resources/config.yml";
+        String filename = "config.yml";
         FileConfiguration ymlThing = configUtil.loadYMLFromPluginFolder(this, filename);
         if(ymlThing != null) {
             configUtil.loadYMLFromJar(this, SignShopGuardian.class, ymlThing, filename);
@@ -110,7 +110,6 @@ public class SignShopGuardian extends JavaPlugin {
             Metrics metrics = new Metrics(this, B_STATS_ID);
             log("Thank you for enabling metrics!", Level.INFO);
         }
-        log("Enabled", Level.INFO);
         log("Enabled", Level.INFO);
     }
 
