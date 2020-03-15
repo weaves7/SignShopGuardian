@@ -1,5 +1,6 @@
 package org.wargamer2010;
 
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -19,6 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class SignShopGuardian extends JavaPlugin {
+    private static final int B_STATS_ID = 6770;
     private static final Logger logger = Logger.getLogger("Minecraft");
     private static SignShopGuardian instance = null;
     private static final String metaName = "Guardians";
@@ -96,15 +98,19 @@ public class SignShopGuardian extends JavaPlugin {
 
             SignShopConfig.setupOperations(configUtil.fetchStringStringHashMap("signs", ymlThing), "org.wargamer2010.signshopguardian.operations");
             SignShopConfig.registerErrorMessages(configUtil.fetchStringStringHashMap("errors", ymlThing));
-            for(Map.Entry<String, HashMap<String, String>> entry : configUtil.fetchHasmapInHashmap("messages", ymlThing).entrySet()) {
+            for (Map.Entry<String, HashMap<String, String>> entry : configUtil.fetchHasmapInHashmap("messages", ymlThing).entrySet()) {
                 SignShopConfig.registerMessages(entry.getKey(), entry.getValue());
             }
 
             getSettings(ymlThing);
         }
-
-
         setInstance(this);
+        //Enable metrics
+        if (SignShopConfig.metricsEnabled()) {
+            Metrics metrics = new Metrics(this, B_STATS_ID);
+            log("Thank you for enabling metrics!", Level.INFO);
+        }
+        log("Enabled", Level.INFO);
         log("Enabled", Level.INFO);
     }
 
