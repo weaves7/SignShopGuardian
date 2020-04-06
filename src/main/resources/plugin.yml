@@ -2,9 +2,8 @@ name: SignShopGuardian
 main: org.wargamer2010.signshopguardian.SignShopGuardian
 api-version: "1.13"
 version: "${project.version}"
-dev-url: http://dev.bukkit.org/server-mods/org.wargamer2010.signshopguardian
 depend: [SignShop]
-authors: [Wargamer2010, Weaves]
+authors: [Wargamer2010, Devinish, Weaves]
 commands:
   getguardians:
     description: Queries the amount of guardians left
