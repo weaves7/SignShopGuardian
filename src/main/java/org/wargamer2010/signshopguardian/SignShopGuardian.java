@@ -12,6 +12,8 @@ import org.jetbrains.annotations.NotNull;
 import org.wargamer2010.signshop.configuration.SignShopConfig;
 import org.wargamer2010.signshop.configuration.configUtil;
 import org.wargamer2010.signshopguardian.listeners.SignShopGuardianListener;
+import org.wargamer2010.signshopguardian.operations.givePlayerGuardians;
+import org.wargamer2010.signshopguardian.operations.takePlayerGuardians;
 
 import java.util.HashMap;
 import java.util.List;
@@ -96,6 +98,8 @@ public class SignShopGuardian extends JavaPlugin {
         if(ymlThing != null) {
             configUtil.loadYMLFromJar(this, SignShopGuardian.class, ymlThing, filename);
 
+            SignShopConfig.registerExternalOperation(new givePlayerGuardians());
+            SignShopConfig.registerExternalOperation(new takePlayerGuardians());
             SignShopConfig.setupOperations(configUtil.fetchStringStringHashMap("signs", ymlThing), "org.wargamer2010.signshopguardian.operations");
             SignShopConfig.registerErrorMessages(configUtil.fetchStringStringHashMap("errors", ymlThing));
             for (Map.Entry<String, HashMap<String, String>> entry : configUtil.fetchHasmapInHashmap("messages", ymlThing).entrySet()) {
